@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CategoriaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,3 +20,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//listar categoria
+Route::get('/categorias', [CategoriaController::class, 'listar'])->name("listarCategorias");
+//anadir categoria
+Route::post('/nuevaCategoria', [CategoriaController::class, 'anadircategoria'])->name('anadircategoria');
+//BORRAR CATEGOIRA
+Route::delete('/eliminarCategoria{categoria}', [CategoriaController::class, 'eliminarcategoria'])->name('eliminarcategoria');
+
+//actualizar categoria
+
+Route::patch('/actcategoria-{categoria}', [CategoriaController::class, 'actcategoria'])->name('actcategoria');
