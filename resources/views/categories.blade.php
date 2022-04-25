@@ -54,6 +54,15 @@
             </select>
             <input type="submit" value="Enviar">
         </form>
+        <div>
+            <h2>Buscar Categorias</h2>
+            <form action="{{route('listarCategorias')}}" method="get">
+                @csrf
+                <input type="text" name="buscar">
+                <button type="submit">Buscar</button>
+            </form>
+            <a href="{{route('listarCategorias')}}"><button>Limpiar</button></a>
+        </div>
     </div>
     
     

@@ -6,15 +6,15 @@
 
 @section('content')
 <div class="subheader">
-    {{-- @foreach ($categorias as $categoria)
+    @foreach ($categorias as $categoria)
 
     <a href="{{route('categoria',$categoria->nombre)}}">{{$categoria->nombre}}</a>
 
-    @endforeach --}}
+    @endforeach
 </div>
 
 <div class="productoshome">
-    {{-- @foreach ($productos as $producto)    
+    @foreach ($productos as $producto)    
     <div class="claseproducto">
         <img class="homeimagenproductos" src="fotos/{{$producto->id}}/{{$producto->foto}}" alt="">
         <h2>{{$producto->nombre}}</h2>
@@ -26,7 +26,7 @@
             <h6>Unidades</h6>
         </div>
     </div>
-    @endforeach --}}
+    @endforeach
 </div>
 
 @endsection

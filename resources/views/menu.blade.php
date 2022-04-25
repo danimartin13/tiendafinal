@@ -14,7 +14,7 @@
         <ul class="likhea">
            
             @guest
-                <a href="{{route('login')}}"><li class="lis">Iniciar sesion</li></a>
+                <li><a href="{{route('login')}}"><li class="lis">Iniciar sesion</a></li>
 
             @else
                 <a class="dropdown-item" href="{{ route('logout') }}"
@@ -22,9 +22,17 @@
                             document.getElementById('logout-form').submit();">
                 {{ __('Logout') }}
                 </a>
+                <li><a href="{{route('editarperfil')}}"><li class="lis">Perfil</a></li>
+
+                
             @endguest
             <a href="/productos"><li class="lis">carrito</li></a>
-            
+            <form action="{{route('/')}}" method="get">
+                @csrf
+                <input type="text" name="buscar">
+                <button type="submit">Buscar</button>
+            </form>
+            <a href="{{route('/')}}"><button>Limpiar</button></a>
         </ul>
     </nav>
 

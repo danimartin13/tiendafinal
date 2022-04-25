@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Categoria;
+use App\Producto;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,16 +14,20 @@ class CategoriaController extends Controller
         if(Auth::user()){
                 $usuario = User::find(Auth::id());
             if ($usuario->rol == '1'){
-                $categorias = Categoria::get();
+                if(request('buscar')){
+                    $texto = request('buscar');
+                    $categorias = Categoria::whereRaw('lower(NOMBRE) like (?)',["%{$texto}%"])->get();
+                }else $categorias = Categoria::get();
+
                     return view('categories',
                     [
                         'categorias'=>$categorias
                     ]);
             }else{
-                return redirect('home');
+                return redirect('login');
             }
         }else{
-            return redirect('home');
+            return redirect('login');
         }
         
         //echo "Hola";
@@ -43,8 +48,9 @@ class CategoriaController extends Controller
     }
     public function listarProductos($categoria){
         $cat = Categoria::where('nombre','=',$categoria)->get();
-        $productos = Producto::where('id_categoria','=',$cat[0]->id)->get();
-        return view('categoria',compact('productos'));
+        $categorias = Categoria::where('estado','!=','2')->get();
+        $productos = Producto::where('id_categoria','=',$cat[0]->id)->where('estado','!=',"2")->get();
+        return view('categoria',compact('productos', 'categorias'));
     }
     
     public function actcategoria($categoria){
