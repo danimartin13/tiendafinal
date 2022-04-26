@@ -41,6 +41,10 @@ Route::patch('/actcategoria-{categoria}', [CategoriaController::class, 'actcateg
 // productos
 // listar productos
 Route::get('/productos', [ProductoController::class, 'listar'])->name("listarProductos");
+
+//pagina productos
+Route::get('/producto-{producto}', [ProductoController::class,'mostrarprod'])->name('producto');
+
 //añadir producto
 Route::post('/nuevaProducto', [ProductoController::class, 'anadirproducto'])->name('anadirproducto');
 // eliminar producto eliminarprooducto
@@ -51,3 +55,16 @@ Route::patch('/actproducto-{producto}', [ProductoController::class, 'actproducto
 //editar perfil
 Route::get('/editarperfil', [InicioController::class, 'perfil'])->name('editarperfil');
 Route::patch('/editarperfil-{usuario}', [InicioController::class, 'editarperfil'])->name('editarperfilActualizar');
+
+// subircarrito
+Route::post('/subircarrito-{producto}', [InicioController::class, 'subircarrito'])->name('subircarrito');
+//carrito
+Route::get('/carrito', [InicioController::class,'carrito'])->name('carrito');
+//eliminarproductocarrito
+Route::delete('/eliminarproductocarrito{producto}', [InicioController::class, 'eliminarproductocarrito'])->name('eliminarproductocarrito');
+
+//comprarproducto
+Route::patch('/comprarproducto-{usuario}', [InicioController::class, 'comprarproducto'])->name('comprarproducto');
+
+//ventas
+Route::get('/ventas', [InicioController::class, 'ventas'])->name('ventas');

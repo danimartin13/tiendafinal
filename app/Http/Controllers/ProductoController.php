@@ -27,10 +27,10 @@ class ProductoController extends Controller
                         'categorias'=>$categorias
                     ]);
                 }else{
-                    return redirect('home');
+                    return redirect('/');
                 }
             }else{
-                return redirect('home');
+                return redirect('/');
             }
         //echo "Hola";
     }
@@ -71,16 +71,11 @@ class ProductoController extends Controller
         ]);
         return redirect('productos');
     }
-    public function lisiar(){
-        
-                $productos = Producto::get();
-                $categorias = Categoria::get();
-                    return view('home',
-                    [
-                        'productos'=>$productos,
-                        'categorias'=>$categorias
-                    ]);
-                }
+    public function mostrarprod($prod){
+        $productos = Producto::where('id','=',$prod)->where('estado','!=',"2")->get();
+        $categorias = Categoria::where('estado','!=','2')->get();
+        return view('product',compact('productos', 'categorias'));
+    }
         //echo "Hola";
     
 }

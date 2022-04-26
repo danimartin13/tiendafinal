@@ -2,6 +2,9 @@
     margin: 0;
     padding: 0;
 }
+.logo{
+    width: 200px;
+}
 html {
     min-height: 100%;
     position: relative;

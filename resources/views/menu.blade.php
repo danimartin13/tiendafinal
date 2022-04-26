@@ -10,7 +10,7 @@
 </head>
 <body>
     <nav class="headeer">
-        <a href="/">Imagen logotipo</a>
+        <a href="/"><img class="logo" src="fotos/logo_tv.png" alt=""></a>
         <ul class="likhea">
            
             @guest
@@ -23,10 +23,10 @@
                 {{ __('Logout') }}
                 </a>
                 <li><a href="{{route('editarperfil')}}"><li class="lis">Perfil</a></li>
-
+                <a href="/carrito"><li class="lis">carrito</li></a>
                 
             @endguest
-            <a href="/productos"><li class="lis">carrito</li></a>
+            
             <form action="{{route('/')}}" method="get">
                 @csrf
                 <input type="text" name="buscar">
@@ -35,6 +35,7 @@
             <a href="{{route('/')}}"><button>Limpiar</button></a>
         </ul>
     </nav>
+    
 
     @yield('content')
 
