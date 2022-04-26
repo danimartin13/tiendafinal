@@ -11,8 +11,9 @@
     <div class="productoshome">
         @foreach ($productos as $producto)    
         <div class="claseproducto">
-            <img class="homeimagenproductos" src="fotos/{{$producto->id}}/{{$producto->foto}}" alt="">
-            <h2>{{$producto->nombre}}</h2>
+            <a href="{{route('producto',$producto->id)}}">
+                <img class="homeimagenproductos" src="fotos/{{$producto->id}}/{{$producto->foto}}" alt=""> 
+            </a>            <h2>{{$producto->nombre}}</h2>
             <h5>{{$producto->descripcion}}</h5>
             <h6>{{$producto->precio}} €</h6>
             <div class="unidades">

@@ -18,7 +18,7 @@ class InicioController extends Controller
             $texto = request('buscar');
             $productos = Producto::where('estado','!=','2')->whereRaw('lower(NOMBRE) like (?)',["%{$texto}%"])->get();
         }
-        else $productos = Producto::where('estado','!=','2')->get();
+        else $productos = Producto::where('estado','!=','2')->where('stock','>','0')->get();
         $categorias = Categoria::where('estado','!=','2')->get();
         
             return view('home', compact('productos','categorias'));
@@ -79,13 +79,18 @@ class InicioController extends Controller
     public function carrito(){
         $usuario = User::find(Auth::id());
         $usuarios = $usuario->id;
-        $cat = Carrito::where('id_user','=', $usuarios)->where('estado','=', 'pendiente')->get();
-        $ant = Carrito::where('id_user','=', $usuarios)->where('estado','!=', 'pendiente')->get();
+        $cat = Carrito::where('id_user','=', $usuarios)->where('estado','=', 'carrito')->get();
+        $ant = Carrito::where('id_user','=', $usuarios)->where('estado','!=', 'carrito')->get();
         return view('carrito', compact('cat', 'ant'));
     }
     static function devolverNombreProducto($id){
         return Producto::find($id)->nombre;
     }
+
+    static function devolverNombrecliente($id){
+        return User::find($id)->name;
+    }
+
     static function devolverprecio($id){
         return Producto::find($id)->precio;
     }
@@ -96,13 +101,45 @@ class InicioController extends Controller
         return back();
     }
     public function comprarproducto($id){
-        Carrito::find($id)->update([
-            'estado' => 'pendiente'
-        ]);
+        $carrito = carrito::find($id);
+        $prod = Producto::find($carrito->id_prod);
+        if ($prod->stock>=$carrito->cantidad) {
+            $carrito->update([
+                'estado' => 'pendiente'
+            ]);
+            $prod->update([
+                'stock' => $prod->stock - $carrito->cantidad
+            ]);
+            return back()->with('status','la compra se ha realizado');
+        }else{
+            return back()->with('status','no hay stock suficiente');
+        }
+        
         return back();
     }
     public function ventas(){
-        $todos = Carrito::get();
+        $todos = Carrito::where('estado','!=', 'carrito')->get();
         return view('ventas', compact('todos'));
     }
+    public function actestado($id){
+        Carrito::find($id)->update([
+            'estado' => 'Enviado'
+        ]);
+        return back();
+    }
+    public function sumarprod($id){
+        $carrito = carrito::find($id);
+        $carrito->update([
+            'cantidad' => $carrito->cantidad++
+        ]);
+        return back()->with('status','se ha modificado correctamente');
+    }
+    public function restprod($id){
+        $carrito = carrito::find($id);
+        $carrito->update([
+            'cantidad' => $carrito->cantidad--
+        ]);
+        return back()->with('status','se ha modificado correctamente');
+    }
+    
 }

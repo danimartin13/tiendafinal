@@ -21,6 +21,7 @@ Route::get('/', [InicioController::class,'index'])->name('/');
 Auth::routes();
 
 
+
 // Route::get('/home', 'HomeController@index')->name('home');
 //pagina categorias
 Route::get('/categoria-{categoria}', [CategoriaController::class,'listarProductos'])->name('categoria');
@@ -68,3 +69,12 @@ Route::patch('/comprarproducto-{usuario}', [InicioController::class, 'comprarpro
 
 //ventas
 Route::get('/ventas', [InicioController::class, 'ventas'])->name('ventas');
+
+//actestado
+Route::patch('/actestado-{usuario}', [InicioController::class, 'actestado'])->name('actestado');
+
+//sumarprod
+Route::patch('/sumarprod-{usuario}', [InicioController::class, 'sumarprod'])->name('sumarprod');
+
+//restprod
+Route::patch('/restprod-{usuario}', [InicioController::class, 'restprod'])->name('restprod');
